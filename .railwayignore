@@ -1,0 +1,45 @@
+# Railway Ignore File - exclude unnecessary files from deployment
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Environment files (use Railway's environment variables instead)
+.env
+.env.local
+.env.*.local
+
+# Testing and demo files
+test_*.py
+demo_*.py
+*_test.py
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (optional - include if needed)
+*.md
+!README.md
+
+# Other
+.pytest_cache/
+.coverage
+htmlcov/

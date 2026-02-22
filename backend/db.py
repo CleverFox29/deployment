@@ -63,11 +63,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Connection URI - can be read from .env or use default
-MONGODB_URI = os.getenv(
-    "MONGODB_URI",
-    "mongodb+srv://cleverfox2305:ncubed333@cluster0.zvtbmvc.mongodb.net/?appName=Cluster0"
-)
+# Connection URI - MUST be set in environment variables
+MONGODB_URI = os.getenv("MONGODB_URI")
+if not MONGODB_URI:
+    raise ValueError(
+        "MONGODB_URI environment variable is not set. "
+        "Please set it in your .env file or Railway environment variables."
+    )
 
 # Create MongoDB Client
 client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))

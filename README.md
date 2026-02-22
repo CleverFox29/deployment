@@ -98,6 +98,36 @@ If you want to use your own MongoDB instance:
 2. Add your MongoDB URI: `MONGODB_URI=mongodb+srv://...`
 3. Run the app - it will use your database instead
 
+## 🚀 Deployment to Railway
+
+The application is fully optimized for production deployment on Railway. See detailed guides:
+
+- **[Quick Reference](QUICK_REFERENCE.md)** - Fast deployment guide
+- **[Railway Deployment Guide](RAILWAY_DEPLOYMENT.md)** - Complete step-by-step instructions
+- **[Deployment Checklist](DEPLOYMENT_CHECKLIST.md)** - Pre-deployment verification
+- **[Optimization Summary](OPTIMIZATION_SUMMARY.md)** - What was optimized and why
+
+### Quick Deploy
+
+1. **Validate your setup**:
+   ```bash
+   python validate_deployment.py
+   ```
+
+2. **Set environment variables in Railway**:
+   - `MONGODB_URI` - Your MongoDB connection string
+   - `SECRET_KEY` - Generate with: `python -c "import secrets; print(secrets.token_hex(32))"`
+
+3. **Deploy**:
+   - Push to GitHub
+   - Create new project on Railway
+   - Connect your repository
+   - Railway auto-deploys!
+
+Your app will be live at: `https://your-project.railway.app`
+
+See [QUICK_REFERENCE.md](QUICK_REFERENCE.md) for more details.
+
 ## Project Structure
 
 ```

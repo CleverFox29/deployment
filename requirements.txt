@@ -1,8 +1,23 @@
+# Web Framework
 Flask==2.3.3
 flask-cors==4.0.0
+
+# Database
 pymongo==4.5.0
+
+# Environment & Configuration
 python-dotenv==1.0.0
+
+# Authentication & Security
 bcrypt==4.0.1
 PyJWT==2.8.0
+
+# Game Data
 minecraft_data==3.20.0
+
+# Production WSGI Server
+gunicorn==21.2.0
+
+# Monitoring & Logging (optional but recommended)
+python-json-logger==2.0.7
 
