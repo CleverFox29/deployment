@@ -127,20 +127,16 @@ async function getWorldProjectsCompletion(worldName) {
             return [];
         }
         
-        // Fetch smart completion for each project
-        const completions = [];
-        for (const project of projects) {
-            try {
-                const completion = await getProjectCompletion(project._id);
-                if (completion) {
-                    completions.push(completion);
-                }
-            } catch (err) {
+        // Fetch smart completion for ALL projects in parallel instead of sequentially
+        const completionPromises = projects.map(project =>
+            getProjectCompletion(project._id).catch(err => {
                 console.error(`Failed to get completion for project ${project._id}:`, err);
-            }
-        }
+                return null;
+            })
+        );
         
-        return completions;
+        const completions = await Promise.all(completionPromises);
+        return completions.filter(c => c !== null);
     } catch (err) {
         console.error('Failed to fetch world projects completion:', err);
         return [];
@@ -239,8 +235,32 @@ async function renderWorldTabs() {
     tabButtons.innerHTML = '';
     tabPanels.innerHTML = '';
 
-    // Render each world with its projects
-    for (const world of worlds) {
+    // Pre-fetch projects and inventory for all worlds in parallel
+    const worldDataPromises = worlds.map(world =>
+        Promise.all([
+            apiCall(`/projects?world_name=${encodeURIComponent(world.world_name)}`, 'GET').catch(err => ({ projects: [], error: err })),
+            fetchWorldInventory(world.world_name).catch(err => [])
+        ]).then(([projectsData, inventoryItems]) => ({
+            world,
+            projectsData,
+            inventoryItems
+        }))
+    );
+    
+    const worldsDataList = await Promise.all(worldDataPromises);
+    
+    // Fetch completions for all projects across all worlds in parallel
+    const completionPromises = worldsDataList.map(wd =>
+        getWorldProjectsCompletion(wd.world.world_name)
+            .then(completions => ({ ...wd, completions: completions || [] }))
+            .catch(err => ({ ...wd, completions: [] }))
+    );
+    
+    const worldsWithData = await Promise.all(completionPromises);
+
+    // Now render all worlds with their pre-fetched data
+    for (const wd of worldsWithData) {
+        const world = wd.world;
         const btn = document.createElement('button');
         btn.className = 'tab-btn' + (world.world_name === currentWorldId ? ' active' : '');
         btn.dataset.target = world.world_name;
@@ -255,10 +275,10 @@ async function renderWorldTabs() {
         panel.className = 'tab-panel' + (world.world_name === currentWorldId ? ' active' : '');
         panel.id = world.world_name;
         
-        // Fetch projects for this world
+        // Use pre-fetched data for this world
         let projectsHTML = '<p>Loading projects...</p>';
         try {
-            const projectsData = await apiCall(`/projects?world_name=${encodeURIComponent(world.world_name)}`, 'GET');
+            const projectsData = wd.projectsData;
             const projects = projectsData.projects || [];
             
             if (projects.length === 0) {
@@ -266,8 +286,8 @@ async function renderWorldTabs() {
             } else {
                 projectsHTML = '<div class="projects-list">';
                 
-                // Get inventory-based completion for all projects in this world
-                const completions = await getWorldProjectsCompletion(world.world_name);
+                // Use pre-fetched completions for all projects
+                const completions = wd.completions;
                 const completionMap = {};
                 completions.forEach(c => {
                     completionMap[c.project_id] = c;
@@ -348,10 +368,10 @@ async function renderWorldTabs() {
             projectsHTML = `<p style="color: red;">Failed to load projects: ${err.message}</p>`;
         }
         
-        // Fetch inventory for this world
+        // Use pre-fetched inventory for this world
         let inventoryHTML = '<p>Loading inventory...</p>';
         try {
-            const inventoryItems = await fetchWorldInventory(world.world_name);
+            const inventoryItems = wd.inventoryItems;
             
             if (inventoryItems.length === 0) {
                 inventoryHTML = '<p style="color: #888;">No items in inventory yet.</p>';
@@ -598,16 +618,17 @@ function logout() {
     
     document.getElementById('status').textContent = 'Connected';
     
-    // Fetch user profile from API
-    const user = await fetchUserProfile();
+    // Load user profile and Minecraft items in parallel for faster initialization
+    const [user] = await Promise.all([
+        fetchUserProfile(),
+        fetchMinecraftItems()
+    ]);
+    
     if (user) {
         document.getElementById('userInfo').textContent = `User: ${user.username || 'unknown'}`;
     } else {
         document.getElementById('userInfo').textContent = 'User: unknown';
     }
-    
-    // Load Minecraft items for dropdown
-    await fetchMinecraftItems();
     
     // Load worlds from database
     await renderWorldTabs();
