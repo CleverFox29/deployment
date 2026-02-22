@@ -1,0 +1,399 @@
+:root {
+    --mc-grey: #c6c6c6;
+    --mc-grey-dark: #373737;
+    --mc-grey-light: #ffffff;
+    --mc-green: #3fb53f;
+    --mc-green-hover: #2e8b2e;
+    --mc-hover: #3f4fb5;
+    --text-white: #ffffff;
+    --text-yellow: #ffff00;
+    --error: #ff5555;
+    --block-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4);
+}
+
+#grouplogo {
+    height: 100px;
+    image-rendering: pixelated;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+}
+
+body {
+    background: #1e1e1e;
+    color: var(--text-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Panorama Background */
+.bg-panorama {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/background.webp') no-repeat center center/cover;
+    filter: brightness(0.7);
+    z-index: -2;
+}
+
+header {
+    padding: 16px 24px;
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 4px solid #000;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+    backdrop-filter: blur(5px);
+}
+
+.title { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 { 
+    margin: 0; 
+    font-size: 1rem;
+    color: var(--text-yellow);
+    text-shadow: 2px 2px 0 #000;
+}
+
+.pill {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 12px;
+    border: 2px solid #555;
+    font-size: 0.5rem;
+    color: #aaa;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 40px;
+}
+
+.tabs > * + * {
+    margin-top: 16px;
+}
+
+.tabs {
+    background: rgba(0, 0, 0, 0.6);
+    border: 4px solid #000;
+    padding: 16px;
+    backdrop-filter: blur(3px);
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.tab-btn {
+    padding: 10px 16px;
+    border: 3px solid #000;
+    background: rgba(30, 30, 30, 0.65);
+    color: #888;
+    cursor: pointer;
+    font-size: 0.6rem;
+    box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    background: rgba(110, 110, 110, 0.7);
+    color: #ccc;
+}
+
+.tab-btn.active {
+    background: #9a9a9a;
+    color: #fff;
+    box-shadow: inset 3px 3px 0 var(--mc-grey-light), inset -3px -3px 0 var(--mc-grey-dark);
+}
+
+.tab-panel {
+    display: none;
+    border-top: 3px solid #333;
+    padding-top: 20px;
+    margin-top: 16px;
+}
+
+.tab-panel.active { 
+    display: block; 
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 4px solid #000;
+    padding: 16px;
+    margin-bottom: 1.5rem;
+}
+
+.card h2 {
+    font-size: 0.8rem;
+    color: var(--text-yellow);
+    margin-bottom: 1.25rem;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.card h3 {
+    font-size: 0.7rem;
+    color: var(--text-yellow);
+    margin: 1.25rem 0 0.75rem 0;
+    text-shadow: 1px 1px 0 #000;
+}
+
+h3 {
+    margin-bottom: 0.75rem;
+}
+
+.card p {
+    font-size: 0.6rem;
+    line-height: 1.6;
+    margin: 0.65rem 0;
+}
+
+.add-world {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.add-world input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px;
+    background: #000000;
+    border: 2px solid #555555;
+    color: white;
+    font-size: 0.7rem;
+    outline: none;
+}
+
+.add-world input:focus {
+    border-color: #ffffff;
+}
+
+button {
+    padding: 10px 16px;
+    background-color: var(--mc-grey);
+    border: 4px solid #000000;
+    color: var(--text-white);
+    font-size: 0.65rem;
+    cursor: pointer;
+    box-shadow: inset 4px 4px 0px var(--mc-grey-light), inset -4px -4px 0px var(--mc-grey-dark);
+    text-align: center;
+    transition: all 0.1s;
+}
+
+button:hover {
+    background-color: var(--mc-hover);
+    box-shadow: inset 4px 4px 0px rgba(255, 255, 255, 0.3), inset -4px -4px 0px rgba(0, 0, 0, 0.5);
+    color: var(--text-yellow);
+}
+
+button:active {
+    box-shadow: inset -4px -4px 0px var(--mc-grey-light), inset 4px 4px 0px var(--mc-grey-dark);
+    transform: translateY(2px);
+}
+
+.btn-primary { 
+    background: var(--mc-green);
+    box-shadow: inset 4px 4px 0 #7cfc00, inset -4px -4px 0 #1b4d00;
+}
+
+.btn-primary:hover {
+    background: var(--mc-green-hover);
+}
+
+.btn-danger { 
+    background: #aa0000;
+    color: white;
+    box-shadow: inset 4px 4px 0 #cc0000, inset -4px -4px 0 #550000;
+}
+
+.btn-danger:hover { 
+    background: #ff0000;
+}
+
+.btn-ghost { 
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.1), inset -3px -3px 0 rgba(0, 0, 0, 0.5);
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.55rem;
+}
+
+.row { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.inventory-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inventory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.6rem;
+    color: #aaaaaa;
+    text-transform: uppercase;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    background: #000000;
+    border: 2px solid #555555;
+    color: white;
+    font-size: 0.7rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    border-color: #ffffff;
+}
+
+.form-input::placeholder {
+    color: #666;
+}
+
+.projects-list {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.projects-list .card {
+    border-left: 4px solid var(--mc-green);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.projects-list .card h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--mc-green);
+    font-size: 0.7rem;
+}
+
+.projects-list .card p {
+    margin: 0.4rem 0;
+    font-size: 0.55rem;
+    line-height: 1.5;
+}
+
+.projects-list .card strong {
+    color: var(--text-yellow);
+}
+
+hr {
+    border: none;
+    border-top: 3px solid #333;
+    margin: 2.25rem 0;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    background: #000000;
+    border: 2px solid #555555;
+    color: white;
+    font-size: 0.7rem;
+    outline: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: #ffffff;
+}
+
+select option {
+    background: #000000;
+    color: white;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.6rem;
+    color: #aaaaaa;
+    text-transform: uppercase;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    background: #000000;
+    border: 2px solid #555555;
+    color: white;
+    font-size: 0.7rem;
+    outline: none;
+}
+
+input[type="number"]:focus {
+    border-color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    /* Stack side-by-side sections vertically on smaller screens */
+    [style*="display: flex; gap: 2rem"] {
+        flex-direction: column;
+        gap: 1.5rem !important;
+    }
+    
+    [style*="flex: 0 0 auto"],
+    [style*="flex: 1; min-width"] {
+        min-width: auto !important;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 0.8rem;
+    }
+    
+    .pill {
+        font-size: 0.45rem;
+        padding: 6px 10px;
+    }
+    
+    button {
+        font-size: 0.6rem;
+        padding: 8px 12px;
+    }
+}

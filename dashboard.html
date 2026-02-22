@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraftChain Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-panorama"></div>
+    <header>
+        <div class="title">
+            <img src="assets/logo.png" id="grouplogo" alt="group Logo">
+            <span class="pill" id="status">Checking token...</span>
+            <span class="pill" id="userInfo">Loading user...</span>
+        </div>
+        <div class="row">
+            <button class="btn-danger" onclick="deleteUser()">Delete User</button>
+            <button class="btn-ghost" onclick="logout()">Logout</button>
+            <button class="btn-ghost" onclick="goToLogin()">Back to Login</button>
+        </div>
+    </header>
+    <main>
+        <div class="tabs">
+            <div class="add-world">
+                <input id="newWorldName" placeholder="Add a world name" />
+                <button class="btn-primary" onclick="addWorld()">Add World</button>
+            </div>
+            <div id="tabButtons" class="tab-buttons"></div>
+            <div id="tabPanels"></div>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

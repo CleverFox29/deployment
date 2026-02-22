@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft | Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/login.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-panorama"></div>
+    <!-- <div class="bg-overlay"></div> -->
+
+    <div class="mc-container">
+        <img src="assets/logo.png" alt="group-name" class="h1">
+
+        <div class="mc-card">
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label>Player Username</label>
+                    <input type="text" id="username" placeholder="Steve" required>
+                    <div id="usernameError" class="error-message">Invalid Username!</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <div id="passwordError" class="error-message">Missing Pass!</div>
+                </div>
+
+                <button type="submit" class="mc-button" id="submitBtn">Login</button>
+            </form>
+        </div>
+
+        <div class="mc-footer">
+            New Player? <a href="signup.html">Register Here</a>
+        </div>
+    </div>
+</body>
+
+</html>
