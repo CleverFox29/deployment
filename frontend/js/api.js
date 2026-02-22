@@ -13,11 +13,11 @@
  */
 
 // Auto-detect API URL
-// - If on localhost, use localhost
-// - Otherwise, use remote IP (update this if needed)
+// - Uses relative path for deployed environments (Railway, etc.)
+// - Falls back to localhost:5000 for local development
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:5000/api'
-  : (window.API_BASE_URL || 'http://192.168.1.5:5000/api'); // Change 192.168.1.5 to your computer's IP
+  : '/api'; // Use relative path for production
 
 // Token management - Only stores JWT token, all user data fetched from server
 const TokenManager = {

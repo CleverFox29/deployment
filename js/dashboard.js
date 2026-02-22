@@ -15,7 +15,10 @@ function goToLogin() {
     window.location.href = 'login.html';
 }
 
-const DEFAULT_API_BASE = 'http://localhost:5000/api';
+// Use relative path for production, localhost for development
+const DEFAULT_API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5000/api'
+    : '/api';
 
 function getApiBase() {
     return DEFAULT_API_BASE;
