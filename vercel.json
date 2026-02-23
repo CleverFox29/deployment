@@ -1,16 +1,11 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "api/index.py"
-    },
     {
       "src": "/(.*\\.(css|js|html|png|jpg|jpeg|gif|svg|ico|json))",
       "dest": "/$1"
@@ -20,11 +15,6 @@
       "dest": "/index.html"
     }
   ],
-  "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "SECRET_KEY": "@secret_key"
-  },
-  "regions": ["iad1"],
   "functions": {
     "api/index.py": {
       "memory": 1024,

@@ -40,9 +40,15 @@ def check_vercel_config():
         
         print("✓ vercel.json is valid JSON")
         
-        # Check required fields
-        if 'builds' in config and 'routes' in config:
-            print("✓ vercel.json has required 'builds' and 'routes' sections")
+        # Check for either modern or legacy format
+        has_modern = ('rewrites' in config or 'routes' in config) and 'functions' in config
+        has_legacy = 'builds' in config and 'routes' in config
+        
+        if has_modern:
+            print("✓ vercel.json has modern configuration (rewrites/routes + functions)")
+            return True
+        elif has_legacy:
+            print("✓ vercel.json has legacy configuration (builds + routes)")
             return True
         else:
             print("✗ vercel.json missing required sections")
