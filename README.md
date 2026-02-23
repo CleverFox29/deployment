@@ -98,16 +98,36 @@ If you want to use your own MongoDB instance:
 2. Add your MongoDB URI: `MONGODB_URI=mongodb+srv://...`
 3. Run the app - it will use your database instead
 
-## 🚀 Deployment to Railway
+## 🚀 Deployment
 
-The application is fully optimized for production deployment on Railway. See detailed guides:
+The application is optimized for production deployment on **Railway** or **Vercel**:
 
+### Vercel Deployment (Serverless)
+
+**Optimized for Vercel with serverless functions:**
+- **[Vercel Deployment Guide](VERCEL_DEPLOYMENT.md)** - Complete serverless deployment instructions
+- Fast global CDN and automatic scaling
+- Zero-config deployment with `vercel.json`
+- Optimized MongoDB connection pooling
+
+**Quick Vercel Deploy:**
+```bash
+# Validate Vercel configuration
+python validate_vercel.py
+
+# Deploy with Vercel CLI
+vercel --prod
+```
+
+### Railway Deployment (Traditional Server)
+
+**Optimized for Railway with traditional hosting:**
 - **[Quick Reference](QUICK_REFERENCE.md)** - Fast deployment guide
 - **[Railway Deployment Guide](RAILWAY_DEPLOYMENT.md)** - Complete step-by-step instructions
 - **[Deployment Checklist](DEPLOYMENT_CHECKLIST.md)** - Pre-deployment verification
 - **[Optimization Summary](OPTIMIZATION_SUMMARY.md)** - What was optimized and why
 
-### Quick Deploy
+**Quick Railway Deploy:**
 
 1. **Validate your setup**:
    ```bash

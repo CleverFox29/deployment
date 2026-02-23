@@ -30,8 +30,12 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 if not app.config['SECRET_KEY']:
     raise ValueError("SECRET_KEY environment variable must be set for security")
 
-# Check if running in production
-IS_PRODUCTION = os.getenv('RAILWAY_ENVIRONMENT') is not None or os.getenv('FLASK_ENV') == 'production'
+# Check if running in production (Vercel, Railway, or production Flask)
+IS_PRODUCTION = (
+    os.getenv('VERCEL') is not None or 
+    os.getenv('RAILWAY_ENVIRONMENT') is not None or 
+    os.getenv('FLASK_ENV') == 'production'
+)
 
 # Enable CORS with proper configuration
 if IS_PRODUCTION:

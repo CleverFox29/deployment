@@ -68,11 +68,21 @@ MONGODB_URI = os.getenv("MONGODB_URI")
 if not MONGODB_URI:
     raise ValueError(
         "MONGODB_URI environment variable is not set. "
-        "Please set it in your .env file or Railway environment variables."
+        "Please set it in your .env file or environment variables."
     )
 
-# Create MongoDB Client
-client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))
+# Create MongoDB Client with optimized settings for serverless
+# Connection pooling and timeout settings are crucial for Vercel serverless functions
+client = MongoClient(
+    MONGODB_URI, 
+    server_api=ServerApi('1'),
+    maxPoolSize=10,  # Limit connections for serverless
+    minPoolSize=1,   # Keep at least one connection alive
+    maxIdleTimeMS=45000,  # Close idle connections after 45s (Vercel timeout is 10s)
+    serverSelectionTimeoutMS=5000,  # Fast fail if DB unreachable
+    connectTimeoutMS=5000,
+    socketTimeoutMS=5000,
+)
 
 # Database and Collections
 db = client.craftchain
@@ -319,6 +329,9 @@ def clear_database():
     return result
 
 # Test connection
+# Track if indexes have been created (for serverless optimization)
+_indexes_created = False
+
 def test_connection():
     """Test MongoDB connection"""
     try:
@@ -332,6 +345,12 @@ def test_connection():
 # Create indexes for better query performance
 def create_indexes():
     """Create database indexes for hierarchical User → World → Project structure"""
+    global _indexes_created
+    
+    # Skip if indexes already created in this instance (serverless optimization)
+    if _indexes_created:
+        return
+    
     try:
         # Users
         # Email index removed - authentication is username-only
@@ -358,6 +377,11 @@ def create_indexes():
         # User Folders - for world metadata
         user_folders_collection.create_index("user_id", unique=True)
         
+        # Inventory
+        inventory_collection.create_index([("user_id", 1), ("world_name", 1)])
+        inventory_collection.create_index("item_id")
+        
+        _indexes_created = True
         print("✓ Database indexes created successfully!")
         print("  - User → World → Project hierarchy indexes enabled")
     except Exception as e:
@@ -365,7 +389,7 @@ def create_indexes():
 
 # Initialize database on startup
 def init_db():
-    """Initialize database connection and indexes"""
+    """Initialize database connection and indexes (optimized for serverless)"""
     if test_connection():
         create_indexes()
         return True

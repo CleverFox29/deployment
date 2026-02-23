@@ -15,8 +15,9 @@ PyJWT==2.8.0
 # Game Data
 minecraft_data==3.20.0
 
-# Production WSGI Server
-gunicorn==21.2.0
+# Production WSGI Server (Railway/local development only)
+# Vercel uses its own serverless runtime
+gunicorn==21.2.0; platform_system != "Windows"
 
 # Monitoring & Logging (optional but recommended)
 python-json-logger==2.0.7

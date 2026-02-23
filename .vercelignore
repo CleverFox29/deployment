@@ -1,0 +1,61 @@
+# Vercel ignore file - excluded from deployment
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+test_*.py
+demo_*.py
+
+# Environment
+.env
+.env.local
+.env.*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Documentation (deploy only essential docs)
+DEPLOYMENT_CHECKLIST.md
+OPTIMIZATION_SUMMARY.md
+PROJECT_COMPLETION_CALCULATOR.md
+QUICK_REFERENCE.md
+RAILWAY_DEPLOYMENT.md
+railway.json
+Procfile
+runtime.txt
+
+# Temporary files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
